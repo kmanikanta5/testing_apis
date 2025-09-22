@@ -1,7 +1,8 @@
 import { Router } from "express";
-import { UserController } from "../controllers/usercontrollers";
+import { getallalertcategories } from "../controllers/usercontrollers";
 
 const router = Router();
 
-router.get("/users", UserController.getUsers);
+router.get("/get", getallalertcategories);
+
 export default router;

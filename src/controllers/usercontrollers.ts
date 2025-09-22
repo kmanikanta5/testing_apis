@@ -1,35 +1,18 @@
 import { Request, Response } from "express";
-import{ UserService }from "../services/User.Services";
+import { alertcategory } from "../services/AlertCategory";
 
-export class UserController {
-    static async getUsers(req: Request, res: Response) {
-        try {
-            const userId = Number(req.query.userId) || 1; // Example: your logged-in user ID
-            const mode = (req.query.mode as "list" | "download") || "list";
-            const data = await UserService.ManageCustomerUsersDataByAccountAssignment(
-                userId,
-                req.query,
-                mode
-            );
-
-            if (mode === "download") {
-                res.setHeader(
-                    "Content-Disposition",
-                    `attachment; filename=${data.filename}`
-                );
-                res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-                return res.send(data.buffer);
-            }
-
-            res.json(data);
-        } catch (error: any) {
-            res.status(500).json({ error: error.message });
-     }
+export const getallalertcategories = async (req: Request, res: Response) => {
+    try {
+        console.log("Controller hit!");
+        const categories = await alertcategory.findAll();
+        console.log("Categories fetched:", categories);
+        res.status(200).json({
+            success: true,
+            message: "Alert categories fetched successfully",
+            data: categories,
+        });
+    } catch (err) {
+        console.error("Error in getallalertcategories:", err);
+        res.status(500).json({ success: false, message: 'Something went wrong' });
     }
-}
-export const getaccountsbyuserid=async(req:Request,Res:Response)=>{
- try{
-    const userid=Number(req.params.userid)
-    if (isNan(userid))
- }
- }
+};
