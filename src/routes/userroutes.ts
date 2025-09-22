@@ -3,5 +3,5 @@ import { getallalertcategories } from "../controllers/usercontrollers";
 
 const router = Router();
 
-router.get("/get", getallalertcategories);
+router.get("/get", getallalertcategories); //
 export default router;
