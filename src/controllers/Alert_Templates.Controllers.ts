@@ -1,10 +1,11 @@
 import {Request,Response} from "express";
 import { convertBigInt } from "../Utilities/BigInt";
 import prisma from "../config/DataBase.Config";
-import { alertcategory } from "../services/AlertCategory";
-export const getAllalerttemplates = async (req:Request, res:Response) => {
+import { AlertCategory } from "../services/AlertCategory";
+import { RecordWithTtl } from "dns";
+export const getAllAlertCategory = async (req:Request, res:Response) => {
     try {
-        const categories = await alertcategory.findAll();
+        const categories = await AlertCategory.findAll();
         const formatted = convertBigInt(categories);
         res.json({
             success: true,
@@ -16,10 +17,10 @@ export const getAllalerttemplates = async (req:Request, res:Response) => {
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
-export const createAlerttemplates=async(req:Request,res:Response)=>{
+export const createAlertCategory=async(req:Request,res:Response)=>{
     try{
         console.log("api hit ")
-        const categories=await alertcategory.create(req.body);
+        const categories = await AlertCategory.create(req.body);
         const formatted=convertBigInt(categories);
         res.json({
             success:true,
@@ -27,14 +28,14 @@ export const createAlerttemplates=async(req:Request,res:Response)=>{
             data:formatted
         });
     }catch(error){
-        console.log("error in createalerttemplates",error)
+        console.log("error in createAlertCategory",error)
         res.status(500).json({success:false,message:"server error"});
     }
 };
-export const updateAlerttemplates =async(req:Request,res:Response)=>{
+export const updateAlertCategory =async(req:Request,res:Response)=>{
 try{
     const {id}=req.params;
-    const updated_data=await alertcategory.update("template_id",Number(id),req.body);
+    const updated_data = await AlertCategory.update("template_id",Number(id),req.body);
     const formatted=convertBigInt(updated_data);
     res.json({
         success:true,
@@ -46,11 +47,11 @@ try{
     res.status(500).json({ success: false, message: "Server Error" });
 }
 };
-export const deleteAlerttemplates = async (req: Request, res: Response) => {
+export const deleteAlertCategory = async (req: Request, res: Response) => {
     try {
         console.log("API hit");
         const { id } = req.params;
-        const deletedData = await alertcategory.delete("template_id",Number(id));
+        const deletedData = await AlertCategory.delete("template_id",Number(id));
         const formatted = convertBigInt(deletedData);
         res.json({
             success: true,
@@ -63,3 +64,7 @@ export const deleteAlerttemplates = async (req: Request, res: Response) => {
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
+export const Add_alert_recipients =async(req:Request,res:Response)=>{
+    const adding_data=req.body();
+
+}

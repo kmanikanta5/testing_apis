@@ -1,4 +1,2 @@
 import { BaseCrudService } from "./BaseService";
-
-export const alertcategory = new BaseCrudService("alert_templates");
-
+export const AlertCategory=new BaseCrudService("alert_recipients");
